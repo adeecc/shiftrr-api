@@ -1,8 +1,8 @@
 import express from 'express';
 import { isLoggedIn, isNotBanned } from '../utils/auth';
 import Request from '../models/request';
-
 import { requestStatus } from '../types/request';
+import logger from '../utils/logger';
 
 const router = express.Router();
 
@@ -13,8 +13,10 @@ router.get(
   async (_req: express.Request, res: express.Response) => {
     try {
       const requests = await Request.find({});
+      logger.info('[GET /api/requests] Got all requests succesfully!');
       return res.json(requests);
     } catch (e: any) {
+      logger.error(`GET /api/requests] ${e.msg}`);
       return res.status(400).json({
         err: 'Could not fetch all requests',
       });
@@ -28,13 +30,14 @@ router.get(
   isNotBanned,
   async (req: express.Request, res: express.Response) => {
     const id = req.params.id;
-
     try {
       const request = await Request.findById(id);
+      logger.info(`[GET /api/requests/${id}] Got request succesfully!`);
       return res.json(request);
     } catch (e: any) {
+      logger.error(`GET /api/requests/${id}] ${e.msg}`);
       return res.status(400).json({
-        err: 'Could not fetch the request with id: ' + id,
+        err: `Could not fetch the request with id: ${id}`,
       });
     }
   }
@@ -61,7 +64,7 @@ router.post(
       return res.json(request);
     } catch (e: any) {
       return res.status(400).json({
-        err: e.message,
+        err: 'Could not create request',
       });
     }
   }
@@ -79,20 +82,18 @@ router.put(
 
     try {
       const request = await Request.findById(request_id);
-      if (request != null && request.seller == id) {
+      if (request !== null && request.seller === id) {
         await Request.findOneAndUpdate({ _id: request_id }, { status });
         return res.json({
           msg: 'Request updated',
           data: await Request.findById(request_id),
         });
       } else {
-        return res.status(400).json({
-          err: 'You are not the seller of this request',
-        });
+        throw Error();
       }
     } catch (e: any) {
       return res.status(400).json({
-        err: 'User could not be deleted',
+        err: 'Request could not be updated',
       });
     }
   }
@@ -109,19 +110,17 @@ router.delete(
 
     try {
       const request = await Request.findById(request_id);
-      if (request != null && (request.buyer == id || request.seller == id)) {
+      if (request !== null && (request.buyer === id || request.seller === id)) {
         await Request.findByIdAndDelete(request_id);
         return res.json({
           msg: 'Request deleted',
         });
       } else {
-        return res.status(400).json({
-          err: 'You are not the buyer or the seller of this request',
-        });
+        throw Error();
       }
     } catch (e: any) {
       return res.status(400).json({
-        err: 'User could not be deleted',
+        err: 'Request could not be deleted',
       });
     }
   }
