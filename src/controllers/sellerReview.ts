@@ -18,7 +18,7 @@ export const getAllSellerReviews = async () => {
   }
 };
 
-export const getSellerReview = async (_id: string) => {
+export const getSellerReviewById = async (_id: string) => {
   try {
     const review = await SellerReview.findOne({ _id })
       .populate('target')
@@ -42,7 +42,7 @@ export const getSellerReview = async (_id: string) => {
   }
 };
 
-export const getSellerReviews = async (seller_id: string) => {
+export const getSellerReviewsBySellerUser = async (seller_id: string) => {
   try {
     return {
       status: true,
@@ -59,7 +59,7 @@ export const getSellerReviews = async (seller_id: string) => {
   }
 };
 
-export const getPosterSellerReviews = async (user_id: string) => {
+export const getSellerReviewsByPostingUser = async (user_id: string) => {
   try {
     return {
       status: true,

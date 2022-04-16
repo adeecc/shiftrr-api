@@ -46,7 +46,6 @@ export const getRequestReviewsByTarget = async (targetId: string) => {
       data: await RequestReview.find({ target: targetId })
         .populate('target')
         .populate('poster')
-        .populate('request')
         .exec(),
     };
   } catch (e: any) {
@@ -56,14 +55,13 @@ export const getRequestReviewsByTarget = async (targetId: string) => {
   }
 };
 
-export const getRequestReviewsByPoster = async (posterId: string) => {
+export const getRequestReviewsByPostingUser = async (posterId: string) => {
   try {
     return {
       status: true,
       data: await RequestReview.find({ poster: posterId })
         .populate('target')
         .populate('poster')
-        .populate('request')
         .exec(),
     };
   } catch (e: any) {
