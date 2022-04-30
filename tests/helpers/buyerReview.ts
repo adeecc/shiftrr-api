@@ -62,3 +62,12 @@ export const mockBuyerReview = new BuyerReview({
   comment: 'First nice service',
   rating: 3.2,
 });
+
+export const mockBuyerReview2 = new BuyerReview({
+  request: mockBuyerRequest._id,
+  service: mockSellerService._id,
+  seller: mockSellerUser._id,
+  buyer: mockBuyerUser._id,
+  comment: 'Second nice service',
+  rating: 4.3,
+});

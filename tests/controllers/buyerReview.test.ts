@@ -9,6 +9,7 @@ import {
   mockSellerService,
   mockBuyerRequest,
   mockBuyerReview,
+  mockBuyerReview2,
 } from '../helpers/buyerReview';
 
 import {
@@ -51,6 +52,16 @@ describe('Controller: BuyerReview', () => {
     expect(getAllBuyerReviewsQuery.data?.at(0)?._id).toEqual(
       mockBuyerReview._id
     );
+
+    await mockBuyerReview2.save();
+
+    getAllBuyerReviewsQuery = await getAllBuyerReviews();
+    expect(getAllBuyerReviewsQuery.status).toBe(true);
+    expect(getAllBuyerReviewsQuery.data).toBeInstanceOf(Array);
+    expect(getAllBuyerReviewsQuery.data?.length).toBe(2);
+    expect(getAllBuyerReviewsQuery.data?.at(1)?._id).toEqual(
+      mockBuyerReview2._id
+    );
   });
 
   it('Should be able to fetch BuyerReview by ID', async () => {
@@ -84,7 +95,7 @@ describe('Controller: BuyerReview', () => {
     );
     expect(getBuyerReviewByIdQuery.status).toBe(true);
     expect(getBuyerReviewByIdQuery.data).toBeInstanceOf(Array);
-    expect(getBuyerReviewByIdQuery.data?.length).toBe(1);
+    expect(getBuyerReviewByIdQuery.data?.length).toBe(2);
 
     getBuyerReviewByIdQuery = await getBuyerReviewsByBuyerUser(
       mockSellerUser._id.toString()
@@ -100,7 +111,7 @@ describe('Controller: BuyerReview', () => {
     );
     expect(getBuyerReviewByIdQuery.status).toBe(true);
     expect(getBuyerReviewByIdQuery.data).toBeInstanceOf(Array);
-    expect(getBuyerReviewByIdQuery.data?.length).toBe(1);
+    expect(getBuyerReviewByIdQuery.data?.length).toBe(2);
 
     getBuyerReviewByIdQuery = await getBuyerReviewsByPostingUser(
       mockBuyerUser._id.toString()
@@ -136,6 +147,9 @@ describe('Controller: BuyerReview', () => {
       mockSellerUser._id.toString()
     );
     expect(deleteBuyerReviewQuery.status).toBe(true);
-    expect(await BuyerReview.countDocuments({})).toEqual(1);
+    let getBuyerReviewByIdQuery = await getBuyerReviewById(
+      mockBuyerReview._id.toString()
+    );
+    expect(getBuyerReviewByIdQuery.status).toBe(false);
   });
 });
