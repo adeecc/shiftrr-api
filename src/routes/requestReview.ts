@@ -128,13 +128,8 @@ router.post(
   isLoggedIn,
   isNotBanned,
   async (req: express.Request, res: express.Response) => {
-    const loggedInUser: any = req.user;
-    const loggedInUserId = loggedInUser.id;
-
     const { request_id, comment, rating } = req.body;
 
-    // TODO: Verify that the current user is the buyer of the request;
-    // Can pass current logged in user's id to the controller method and check that the buyer id is the same as logged in user's id
     const createRequestReviewQuery = await createRequestReview(
       request_id,
       comment,

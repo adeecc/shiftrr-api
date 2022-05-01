@@ -1,6 +1,4 @@
 import User from '../models/user';
-import Service from '../models/service';
-import Request from '../models/request';
 
 export const getAllUsers = async () => {
   try {

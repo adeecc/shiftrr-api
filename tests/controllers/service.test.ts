@@ -11,7 +11,6 @@ import {
   deleteService,
 } from '../../src/controllers/service';
 import User from '../../src/models/user';
-import { serializeUser } from 'passport';
 
 describe('Controller: Services', () => {
   let mongoServer: MongoMemoryServer;
@@ -60,7 +59,7 @@ describe('Controller: Services', () => {
       name: 'Website development',
       description: 'I will develop an awesome website for you',
       image:
-        'http://www.azinovatechnologies.com/blog/wp-content/uploads/2016/03/web-development.jpg',
+        'https://www.azinovatechnologies.com/blog/wp-content/uploads/2016/03/web-development.jpg',
       startingPrice: 5000,
     });
     await service.save();
@@ -75,7 +74,7 @@ describe('Controller: Services', () => {
       'I will develop an awesome website for you'
     );
     expect(pageHits.data?.at(0)?.image).toEqual(
-      'http://www.azinovatechnologies.com/blog/wp-content/uploads/2016/03/web-development.jpg'
+      'https://www.azinovatechnologies.com/blog/wp-content/uploads/2016/03/web-development.jpg'
     );
     expect(pageHits.data?.at(0)?.startingPrice).toEqual(5000);
 
@@ -84,7 +83,7 @@ describe('Controller: Services', () => {
       name: 'Android app development',
       description: 'I will develop an awesome Android app for you',
       image:
-        'http://www.techglows.com/wp-content/uploads/2014/09/android-app-development.png',
+        'https://www.techglows.com/wp-content/uploads/2014/09/android-app-development.png',
       startingPrice: 5000,
     });
     await service.save();
@@ -99,7 +98,7 @@ describe('Controller: Services', () => {
       'I will develop an awesome Android app for you'
     );
     expect(pageHits.data?.at(1)?.image).toEqual(
-      'http://www.techglows.com/wp-content/uploads/2014/09/android-app-development.png'
+      'https://www.techglows.com/wp-content/uploads/2014/09/android-app-development.png'
     );
     expect(pageHits.data?.at(1)?.startingPrice).toBe(5000);
   });

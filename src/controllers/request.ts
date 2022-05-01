@@ -130,11 +130,11 @@ export const updateRequest = async (
     const requestQuery = await getRequest(id);
     if (requestQuery.status) {
       const request = requestQuery.data;
-      const requestService: any = request!.service;
+      const requestService: any = request?.service;
       if (
         new ObjectId(requestService.seller).equals(new ObjectId(updatingUserId))
       ) {
-        await request!.updateOne(data);
+        await request?.updateOne(data);
         return {
           status: true,
           data: (await getRequest(id)).data,
@@ -161,12 +161,12 @@ export const deleteRequest = async (id: string, deletingUserId: string) => {
     const requestQuery = await getRequest(id);
     if (requestQuery.status) {
       const request = requestQuery.data;
-      const requestService: any = request!.service;
+      const requestService: any = request?.service;
       if (
-        new ObjectId(request!.buyer._id).equals(new ObjectId(deletingUserId)) ||
+        new ObjectId(request?.buyer._id).equals(new ObjectId(deletingUserId)) ||
         new ObjectId(requestService.seller).equals(new ObjectId(deletingUserId))
       ) {
-        await request!.deleteOne();
+        await request?.deleteOne();
         return {
           status: true,
         };

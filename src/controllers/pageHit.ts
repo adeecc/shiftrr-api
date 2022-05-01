@@ -1,5 +1,4 @@
-import e from 'cors';
-import mongoose, { Date } from 'mongoose';
+import { Date } from 'mongoose';
 import PageHit from '../models/pageHit';
 
 export const getAllPageHits = async (onOrAfterDate?: Date) => {
