@@ -8,7 +8,6 @@ import {
   mockSellerUser,
   mockSellerService,
   mockBuyerRequest,
-  mockSellerReview,
 } from '../helpers/review';
 
 describe('Model: SellerReview', () => {

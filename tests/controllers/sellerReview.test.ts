@@ -96,6 +96,12 @@ describe('Controller: SellerReview', () => {
     expect(getSellerReviewsBySellerUserQuery.status).toBe(true);
     expect(getSellerReviewsBySellerUserQuery.data).toBeInstanceOf(Array);
     expect(getSellerReviewsBySellerUserQuery.data?.length).toBe(2);
+    expect(
+      getSellerReviewsBySellerUserQuery.data?.at(0)?.seller._id
+    ).toStrictEqual(mockSellerUser._id);
+    expect(
+      getSellerReviewsBySellerUserQuery.data?.at(1)?.seller._id
+    ).toStrictEqual(mockSellerUser._id);
 
     getSellerReviewsBySellerUserQuery = await getSellerReviewsBySellerUser(
       mockBuyerUser._id.toString()
@@ -111,6 +117,12 @@ describe('Controller: SellerReview', () => {
     expect(getSellerReviewsByPostingUserQuery.status).toBe(true);
     expect(getSellerReviewsByPostingUserQuery.data).toBeInstanceOf(Array);
     expect(getSellerReviewsByPostingUserQuery.data?.length).toBe(2);
+    expect(
+      getSellerReviewsByPostingUserQuery.data?.at(0)?.buyer._id
+    ).toStrictEqual(mockBuyerUser._id);
+    expect(
+      getSellerReviewsByPostingUserQuery.data?.at(1)?.buyer._id
+    ).toStrictEqual(mockBuyerUser._id);
 
     getSellerReviewsByPostingUserQuery = await getSellerReviewsByPostingUser(
       mockSellerUser._id.toString()
@@ -126,19 +138,21 @@ describe('Controller: SellerReview', () => {
       'Seller Review created inside the test',
       2.3
     );
-
     expect(createSellerReviewQuery.status).toBe(true);
-    expect(createSellerReviewQuery.data).toBeInstanceOf(SellerReview);
-    expect(createSellerReviewQuery.data?.request).toEqual(mockBuyerRequest._id);
-    expect(createSellerReviewQuery.data?.service).toEqual(
-      mockSellerService._id
-    );
-    expect(createSellerReviewQuery.data?.seller).toEqual(mockSellerUser._id);
-    expect(createSellerReviewQuery.data?.buyer).toEqual(mockBuyerUser._id);
-    expect(createSellerReviewQuery.data?.comment).toEqual(
+
+    let checkSellerReview = await SellerReview.findOne({
+      _id: createSellerReviewQuery.data?._id,
+    });
+
+    expect(checkSellerReview).toBeInstanceOf(SellerReview);
+    expect(checkSellerReview?.request).toEqual(mockBuyerRequest._id);
+    expect(checkSellerReview?.service).toEqual(mockSellerService._id);
+    expect(checkSellerReview?.seller).toEqual(mockSellerUser._id);
+    expect(checkSellerReview?.buyer).toEqual(mockBuyerUser._id);
+    expect(checkSellerReview?.comment).toEqual(
       'Seller Review created inside the test'
     );
-    expect(createSellerReviewQuery.data?.rating).toEqual(2.3);
+    expect(checkSellerReview?.rating).toEqual(2.3);
   });
 
   it('Should be able to delete a SellerReview', async () => {
