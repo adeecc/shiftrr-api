@@ -27,7 +27,7 @@ describe('Model: Service', () => {
       name: 'Website development',
       description: 'I will develop an awesome website for you',
       image:
-        'http://www.azinovatechnologies.com/blog/wp-content/uploads/2016/03/web-development.jpg',
+        'https://www.azinovatechnologies.com/blog/wp-content/uploads/2016/03/web-development.jpg',
       startingPrice: 5000,
     });
     await service.save();
@@ -40,7 +40,7 @@ describe('Model: Service', () => {
       'I will develop an awesome website for you'
     );
     expect(serviceInDb?.image).toEqual(
-      'http://www.azinovatechnologies.com/blog/wp-content/uploads/2016/03/web-development.jpg'
+      'https://www.azinovatechnologies.com/blog/wp-content/uploads/2016/03/web-development.jpg'
     );
     expect(serviceInDb?.startingPrice).toEqual(5000);
   });
