@@ -78,7 +78,7 @@ const app = express();
 
   // Parse incoming request bodies in a middleware before your handlers, available under the req.body property.
   app.use(express.json());
-  app.use(express.urlencoded({ extended: false }));
+  app.use(express.urlencoded({ extended: true }));
 
   app.use(
     morgan(

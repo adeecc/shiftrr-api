@@ -15,8 +15,12 @@ router.get(
   '/',
   isLoggedIn,
   isNotBanned,
-  async (_req: express.Request, res: express.Response) => {
-    const getAllServicesQuery = await getAllServices();
+  async (req: express.Request, res: express.Response) => {
+    const prev = req.query.prev;
+    const limit = req.query.limit;
+
+    const getAllServicesQuery = await getAllServices(prev, limit);
+
     if (getAllServicesQuery.status) {
       logger.info('[GET /api/service/] Got all services succesfully!');
       return res.json(getAllServicesQuery.data);
