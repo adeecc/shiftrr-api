@@ -29,7 +29,7 @@ const UserSchema: Schema = new Schema(
             email
           );
         },
-        message: (props) => `${props.value} is not a valid email address.`,
+        message: (props: any) => `${props.value} is not a valid email address.`,
       },
     },
     contactNumber: { type: String },
