@@ -1,10 +1,17 @@
 import Service from '../models/service';
 
-export const getAllServices = async () => {
+export const getAllServices = async (
+  prev: any = new Date().toISOString,
+  limit: any = 10
+) => {
   try {
     return {
       status: true,
-      data: await Service.find().populate('seller').exec(),
+      data: await Service.find({ updatedAt: { $lte: prev } })
+        .sort({ updatedAt: -1 })
+        .limit(limit)
+        .populate('seller')
+        .exec(),
     };
   } catch (e: any) {
     return {
