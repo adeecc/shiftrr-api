@@ -29,3 +29,6 @@ dist
 
 # typescript
 *.tsbuildinfo
+
+# Data
+scripts/*.json
